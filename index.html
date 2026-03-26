@@ -1,11 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mongo Kullanıcıları</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Kullanıcılar</h1>
+      <ul id="userList"></ul>
+    </div>
+
+    <!-- Full page loader -->
+    <div id="overlay">
+      <div id="spinner"></div>
+
+    </div>
+
+    <script>
+      const overlay = document.getElementById("overlay");
+      const list = document.getElementById("userList");
+
+      async function loadUsers() {
+        overlay.style.display = "flex"; // göster
+
+        const res = await fetch("http://localhost:1453/users");
+        const data = await res.json();
+
+        overlay.style.display = "none"; // gizle
+
+        list.innerHTML = "";
+        data.forEach((user) => {
+          const li = document.createElement("li");
+          li.textContent = user.name;
+          list.appendChild(li);
+        });
+      }
+
+      loadUsers();
+    </script>
+  </body>
 </html>

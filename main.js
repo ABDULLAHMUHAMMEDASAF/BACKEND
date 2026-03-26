@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 const User = require("./models/User");
+const MongoUser = require("./models/MongoUser");
+const cors = require("cors");
 
 mongoose
   .connect(
-    "mongodb+srv://emrecan:A.e.3449799@abdullahmuhammedasaf.ubtirhf.mongodb.net/?appName=ABDULLAHMUHAMMEDASAF",
+    "mongodb+srv://emrecan:A.e.3449799@abdullahmuhammedasaf.ubtirhf.mongodb.net/sample_mflix?retryWrites=true&w=majority",
   )
   .then(() => console.log("MongoDB bağlantısı başarılı"))
   .catch((err) => console.log("MongoDB bağlantı hatası:", err));
@@ -14,6 +16,7 @@ const PORT = 1453;
 
 //! JSON parse middleware
 app.use(express.json());
+app.use(cors());
 
 //! GET endpoint
 // app.get("/users", (req, res) => {
@@ -79,17 +82,23 @@ app.delete("/users/:id", async (req, res) => {
 app.put("/users/:id", async (req, res) => {
   const id = req.params.id;
 
-  const updatedUser = await User.findByIdAndUpdate(
-    id,
-    req.body,
-    { new: true }
-  );
+  const updatedUser = await User.findByIdAndUpdate(id, req.body, { new: true });
 
   if (!updatedUser) {
     return res.status(404).json({ message: "User bulunamadı" });
   }
 
   res.json(updatedUser);
+});
+
+//! ---------------------------------- MONGO USERS ------------------------------------------
+app.get("/mongo-users", async (req, res) => {
+  const users = await MongoUser.find();
+  res.json(users);
+});
+
+app.get("/asaf", (req, res) => {
+  res.send("Merhaba zalim backend dünyası");
 });
 
 app.listen(PORT, () => {
