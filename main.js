@@ -2,53 +2,35 @@ const mongoose = require("mongoose");
 const User = require("./models/User");
 const MongoUser = require("./models/MongoUser");
 const cors = require("cors");
+require("dotenv").config();
 
 mongoose
-  .connect(
-    "mongodb+srv://emrecan:A.e.3449799@abdullahmuhammedasaf.ubtirhf.mongodb.net/sample_mflix?retryWrites=true&w=majority",
-  )
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB bağlantısı başarılı"))
   .catch((err) => console.log("MongoDB bağlantı hatası:", err));
 
 const express = require("express");
 const app = express();
-const PORT = 1453;
+const PORT = process.env.PORT || 1453;
 
 //! JSON parse middleware
 app.use(express.json());
 app.use(cors());
 
 //! GET endpoint
-// app.get("/users", (req, res) => {
-//   res.json(users);
-// });
-
 app.get("/users", async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
 
 //! POST endpoint
-// app.post("/users", (req, res) => {
-//   const newUser = { id: users.length + 1, ...req.body };
-//   users.push(newUser);
-//   res.status(201).json(newUser);
-// });
-
 app.post("/users", async (req, res) => {
   const newUser = new User(req.body);
   await newUser.save();
-
   res.status(201).json(newUser);
 });
 
 //! DELETE endpoint
-// app.delete("/users/:id", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   users = users.filter((user) => user.id !== id);
-//   res.json({ message: "Kullanıcı silindi!" });
-// });
-
 app.delete("/users/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -62,23 +44,6 @@ app.delete("/users/:id", async (req, res) => {
 });
 
 //! UPDATE endpoint
-// app.put("/users/:id", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const updatedData = req.body;
-
-//   const userIndex = users.findIndex((user) => user.id === id);
-//   if (userIndex === -1) {
-//     return res.status(404).json({ message: "Kullanıcı bulunamadı" });
-//   }
-
-//   users[userIndex] = {
-//     ...users[userIndex],
-//     ...updatedData,
-//   };
-
-//   res.json(users[userIndex]);
-// });
-
 app.put("/users/:id", async (req, res) => {
   const id = req.params.id;
 
