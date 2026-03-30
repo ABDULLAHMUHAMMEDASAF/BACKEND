@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *,
 *::before,
 *::after {
@@ -88,3 +89,95 @@ li:hover {
   color: white;
   font-size: 20px;
 }
+=======
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  background-color: gray;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+  width: 100%;
+  padding: 5px;
+}
+
+li {
+  background-color: lightblue;
+  padding: 15px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 218ms ease-in-out;
+}
+
+li:hover {
+  background-color: darkslateblue;
+  color: whitesmoke;
+}
+
+/* overlay tam ekran */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.5); /* yarı saydam arka plan */
+  backdrop-filter: blur(8px); /* BURASI önemli: arka planı blurluyor */
+  -webkit-backdrop-filter: blur(8px); /* Safari desteği */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* spinner çark */
+#spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid orange;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin .8s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#overlay p {
+  color: white;
+  font-size: 20px;
+}
+>>>>>>> 6cac44af4ed33a265fd68fc9fae0cac5d8d733bf
