@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const mongoose = require("mongoose");
 const User = require("./models/User");
 const MongoUser = require("./models/MongoUser");
