@@ -16,37 +16,16 @@
       </div>
     </div>
 
+    <div class="git">
+      <button id="btnGit">Load Git Users</button>
+      <div class="git-container">
+
+      </div>
+    </div>
+
     <!-- Full page loader -->
     <div id="overlay">
       <div id="spinner"></div>
     </div>
-
-    <script>
-      const overlay = document.getElementById("overlay");
-      const list = document.getElementById("userList");
-
-      async function loadUsers() {
-        overlay.style.display = "flex"; // göster
-        let count = 0;
-
-        const res = await fetch("http://localhost:1453/users");
-        const data = await res.json();
-
-        overlay.style.display = "none"; // gizle
-
-        list.innerHTML = "";
-        data.forEach((user) => {
-          count++;
-          const li = document.createElement("li");
-          li.textContent = count + "- " + user.name;
-          list.appendChild(li);
-        });
-
-        h1 = document.getElementsByTagName("h1")[0];
-        h1.textContent = `Kullanıcılar: ${data.length} Kişi Listede Var!`;
-      }
-
-      loadUsers();
-    </script>
   </body>
 </html>

@@ -8,21 +8,43 @@
 
 body {
   width: 100%;
-  height: 100%;
+  min-height: 100vh; /* ← bunu ekle */
   display: flex;
-  align-items: center;
+  align-items: stretch; /* ← center yerine stretch, ikisi eşit uzasın */
   justify-content: center;
+  padding: 5px;
+  gap: 5px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: darkorange;
 }
 
 .container {
   position: relative;
   background-color: gray;
-  width: 900px;
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.git {
+  background-color: black;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.git-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
 }
 
 ul {
@@ -108,4 +130,32 @@ li:hover {
   background-color: crimson;
   font-weight: 600;
   color: whitesmoke;
+}
+
+#btnGit {
+  appearance: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 30px;
+  width: 250px;
+  font-weight: 700;
+  background-color: lightcoral;
+  border-radius: 10px;
+}
+
+.git-user {
+  display: flex;
+  align-items: center;
+  background-color: lightblue;
+  border: 1px solid black;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 315ms ease-in-out;
+}
+
+.git-user:hover {
+  background-color: lightcoral;
 }

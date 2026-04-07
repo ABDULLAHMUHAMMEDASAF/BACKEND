@@ -30,6 +30,12 @@ app.get("/hakkimda", (req, res) => {
   ]);
 });
 
+//! GET endpoint - GIT users
+app.get("/git-users", async (req, res) => {
+  const gitUsers = await fetch(process.env.GIT_USERS_URI).then((r) => r.json());
+  res.json(gitUsers);
+});
+
 //! POST end point
 app.post("/kullanicilar", (req, res) => {
   const yeniKullanici = req.body;
