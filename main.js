@@ -54,48 +54,53 @@ document.addEventListener("DOMContentLoaded", () => {
   btnGit.addEventListener("click", async () => {
     const gitContainer = document.getElementsByClassName("git-container")[0];
     gitContainer.innerHTML = ""; // ← temizle
-
     overlay.style.display = "flex"; // göster
-    const res = await fetch("http://localhost:1453/git-users").then((r) =>
-      r.json(),
-    );
 
-    res.forEach((r) => {
-      const div = document.createElement("div");
-      const div2 = document.createElement("div");
-      const div3 = document.createElement("div");
-      const p = document.createElement("p");
-      const img = document.createElement("img");
-      const h3 = document.createElement("h3");
-      const h6 = document.createElement("h6");
+    try {
+      const res = await fetch("http://localhost:1453/git-users");
+      if (!res.ok) throw new Error("API hata döndü: " + res.status);
+      const data = await res.json();
 
-      h3.textContent = r.id + " | " + r.login.toString().toUpperCase();
-      h6.textContent = r.type;
-      img.src = r.avatar_url;
-      p.textContent =
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id perspiciatis doloribus praesentium debitis nostrum obcaecati tempora quos in ipsa unde? Repudiandae perspiciatis explicabo eveniet, rem qui earum. Nemo aliquam sit velit minus! Aliquam laudantium distinctio quod est sunt assumenda animi exercitationem reprehenderit vero. Dignissimos sapiente perspiciatis natus eveniet, tempora officia!";
+      data.forEach((d) => {
+        const div = document.createElement("div");
+        const div2 = document.createElement("div");
+        const div3 = document.createElement("div");
+        const p = document.createElement("p");
+        const img = document.createElement("img");
+        const h3 = document.createElement("h3");
+        const h6 = document.createElement("h6");
 
-      h3.style.cssText =
-        "text-align: center; border-bottom: 1px solid black; padding: 3px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;";
+        h3.textContent = d.id + " | " + d.login.toString().toUpperCase();
+        h6.textContent = d.type;
+        img.src = d.avatar_url;
+        p.textContent =
+          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id perspiciatis doloribus praesentium debitis nostrum obcaecati tempora quos in ipsa unde? Repudiandae perspiciatis explicabo eveniet, rem qui earum. Nemo aliquam sit velit minus! Aliquam laudantium distinctio quod est sunt assumenda animi exercitationem reprehenderit vero. Dignissimos sapiente perspiciatis natus eveniet, tempora officia!";
 
-      h6.style.cssText = "padding: 3px; text-align: center";
-      div3.style.cssText =
-        "flex-grow: 1; font-size: 12px; border-left: 3px solid crimson; padding: 5px; border-bottom-left-radius: 10px; border-top-left-radius: 10px; ";
-      img.style.cssText =
-        "display:block; width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;";
-      div2.style.cssText =
-        "display: flex; flex-direction: column; flex-shrink: 0; width: 150px; overflow: hidden; white-space: nowrap;";
+        h3.style.cssText =
+          "text-align: center; border-bottom: 1px solid black; padding: 3px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;";
 
-      div2.appendChild(h3);
-      div2.appendChild(h6);
-      div3.appendChild(p);
-      div.appendChild(img);
-      div.appendChild(div2);
-      div.appendChild(div3);
-      div.classList.add("git-user");
-      gitContainer.appendChild(div);
-    });
-    overlay.style.display = "none"; // gizle
+        h6.style.cssText = "padding: 3px; text-align: center";
+        div3.style.cssText =
+          "flex-grow: 1; font-size: 12px; border-left: 3px solid crimson; padding: 5px; border-bottom-left-radius: 10px; border-top-left-radius: 10px; ";
+        img.style.cssText =
+          "display:block; width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;";
+        div2.style.cssText =
+          "display: flex; flex-direction: column; flex-shrink: 0; width: 150px; overflow: hidden; white-space: nowrap;";
+
+        div2.appendChild(h3);
+        div2.appendChild(h6);
+        div3.appendChild(p);
+        div.appendChild(img);
+        div.appendChild(div2);
+        div.appendChild(div3);
+        div.classList.add("git-user");
+        gitContainer.appendChild(div);
+      });
+    } catch (error) {
+      console.error("HATA YAKALANDI:", error);
+    } finally {
+      overlay.style.display = "none"; // gizle
+    }
   });
 
   loadUsers();
